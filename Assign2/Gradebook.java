@@ -6,6 +6,8 @@ public class Gradebook {
     public static int midtermEarned;
     public static double midtermCurve;
     public static double finalCurve;
+    public static int scoreMidterm;
+    public static int scoreFinal;
 
 
     public static void main(String[] args) {
@@ -34,6 +36,13 @@ public class Gradebook {
 
         testProcess();
 
+        System.out.println("Grades for " + studName);
+        DisplayAssign(assignFullPoints, assignScore, assignName);
+        System.out.println();
+        System.out.println();
+        DisplayTests();
+        System.out.println();
+        System.out.println();
 
 
 
@@ -147,7 +156,7 @@ public class Gradebook {
         Scanner userInput = new Scanner(System.in);
         while(test)
         {
-            ArrayShowAssign(fullScore, score, name);
+            DisplayAssign(fullScore, score, name);
             System.out.print("Are these assignments correct? [Y/N]: ");
             String response = userInput.next();
             response = response.toLowerCase();
@@ -241,12 +250,39 @@ public class Gradebook {
 
         }
     }
+    public static void DisplayGrades(ArrayList<Integer> fullScore, ArrayList<Integer> score)
+    {
+        //calculate assignments
+        int assignmentFullTotal = 0;
+        int assignmentTotal = 0;
+
+        for (x = 0; x <= fullScore.size(); x++)
+        {
+            assignmentFullTotal = assignmentFullTotal + fullScore.get(x);
+        }
+        for (x = 0; x <= score.size(); x++)
+        {
+            assignmentTotal = assignmentTotal + score.get(x);
+        }
+        //calculate grades
+
+
+        //building strings
+
+        String assignFull = assignmentTotal + "/" + assignmentFullTotal;
+
+        System.out.println("Finals Grades:");
+        System.out.println("Name                                   Points   Total  ");
+        System.out.println("-------------------------------------|--------|-------|");
+        System.out.println("Assignments                              " +assignFull)
+    }
+
     public static void DisplayTests()
     {
         String midterm = null;
         String finalTest = null;
-        int scoreMidterm = (int) Math.round(midtermEarned * midtermCurve);
-        int scoreFinal = (int) Math.round(finalEarned * finalCurve);
+        scoreMidterm = (int) Math.round(midtermEarned * midtermCurve);
+        scoreFinal = (int) Math.round(finalEarned * finalCurve);
         if (midtermCurve == 0)
         {
             midterm = "    No curve";
@@ -274,7 +310,7 @@ public class Gradebook {
         System.out.println("final                                    " + finalEarned + "      " + finalMax + finalTest + "     " + scoreFinal);
     }
 
-    public static void ArrayShowAssign(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name)
+    public static void DisplayAssign(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name)
     {
         int totalEarned = 0;
         int totalMax = 0;
