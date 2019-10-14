@@ -256,11 +256,11 @@ public class Gradebook {
         int assignmentFullTotal = 0;
         int assignmentTotal = 0;
 
-        for (x = 0; x <= fullScore.size(); x++)
+        for (int x = 0; x <= fullScore.size(); x++)
         {
             assignmentFullTotal = assignmentFullTotal + fullScore.get(x);
         }
-        for (x = 0; x <= score.size(); x++)
+        for (int x = 0; x <= score.size(); x++)
         {
             assignmentTotal = assignmentTotal + score.get(x);
         }
@@ -274,7 +274,7 @@ public class Gradebook {
         System.out.println("Finals Grades:");
         System.out.println("Name                                   Points   Total  ");
         System.out.println("-------------------------------------|--------|-------|");
-        System.out.println("Assignments                              " +assignFull)
+        System.out.println("Assignments                              " +assignFull);
     }
 
     public static void DisplayTests()
