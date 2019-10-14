@@ -245,8 +245,8 @@ public class Gradebook {
     {
         String midterm = null;
         String finalTest = null;
-        double scoreMidterm = midtermEarned * midtermCurve;
-        double scoreFinal = finalEarned * finalCurve;
+        int scoreMidterm = (int) Math.round(midtermEarned * midtermCurve);
+        int scoreFinal = (int) Math.round(finalEarned * finalCurve);
         if (midtermCurve == 0)
         {
             midterm = "    No curve";
@@ -268,7 +268,7 @@ public class Gradebook {
         System.out.println();
         System.out.println("Tests:");
         System.out.println("Name                                   Points   Total   Curve    Final");
-        System.out.println("                                                        Factor   Score");
+        System.out.println("                                       Earned           Factor   Score");
         System.out.println("-------------------------------------|--------|-------|--------|--------");
         System.out.println("Midterm                                  " + midtermEarned + "      " + midtermMax + midterm + "     " + scoreMidterm);
         System.out.println("final                                    " + finalEarned + "      " + finalMax + finalTest + "     " + scoreFinal);
