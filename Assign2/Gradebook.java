@@ -1,13 +1,14 @@
 import java.util.*;
 public class Gradebook {
-    public static int testFullPoints;
+    public static int finalMax;
+    public static int finalEarned;
+    public static int midtermMax;
+    public static int midtermEarned;
+    public static int midtermCurve;
+    public static int finalCurve;
     public static void main(String[] args) {
         String studName;
         int assignCount;
-        int midtermMax;
-        int midtermEarned;
-        int finalMax;
-        int finalEarned;
 
         Scanner input = new Scanner(System.in);
 
@@ -29,7 +30,7 @@ public class Gradebook {
             AssignConfirm(assignFullPoints, assignScore, assignName);
         }
 
-        //testProcess(testFullPoints, testScore, testName);
+        testProcess();
         //test scores
 
 
@@ -39,22 +40,49 @@ public class Gradebook {
 
     }
 
-    public static void testProcess(ArrayList<Integer> fullTestScore, ArrayList<Integer> testScore, ArrayList<String> name)
+    public static void testConfirm()
+    {
+        while(true)
+        {
+            Scanner input = new Scanner(System.in);
+            DisplayTests();
+             System.out.print("Are these values correct? [Y/N]: ");
+            System.out.print("Are these assignments correct? [Y/N]: ");
+            String response = input.next();
+            response = response.toLowerCase();
+
+            if (response.contains("n")) {
+                testProcess();
+            }
+            else if (response.contains("y")) {
+                break;
+            }
+            else {
+                System.out.println("Error invalid response");
+            }
+        }
+
+
+
+    }
+
+    public static void testProcess()
     {
         String title ="Tests";
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter the total amount of possible points for the midterm exam: " );
-        fullTestScore.add(userInput.nextInt());
+        midtermMax = userInput.nextInt();
         System.out.println("Enter the amount of points earned on the midterm by the student: ");
-        testScore.add(userInput.nextInt());
+        midtermEarned = userInput.nextInt();
+        System.out.println("Enter the amount of curve applied to the midterm (Enter 0 for no curve)");
+        midtermCurve = userInput.nextInt();
         System.out.println("Enter the total amount of possible points for the final exam: " );
-        fullTestScore.add(userInput.nextInt());
+        finalMax = userInput.nextInt();
         System.out.println("Enter the amount of points earned on the final by the student: ");
-        testScore.add(userInput.nextInt());
-
-        ArrayShow(fullTestScore, testScore, name, title);
-
-
+        finalEarned = userInput.nextInt();
+        System.out.println("Enter the amount of curve applied to the final (Enter 0 for no curve)");
+        finalCurve = userInput.nextInt();
+        testConfirm();
     }
 
     public static void AssignProcess(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name, int totalAssign)
@@ -72,7 +100,8 @@ public class Gradebook {
             }
             else if (assignName.length() < 35)
             {
-                while (assignName.length() < 35) {
+                while (assignName.length() < 35)
+                {
                     assignName = assignName + " ";
                 }
             }
@@ -90,12 +119,11 @@ public class Gradebook {
 
     public static void AssignConfirm(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name)
     {
-        String title = "Assignments";
         boolean test = true;
         Scanner userInput = new Scanner(System.in);
         while(test)
         {
-            ArrayShow(fullScore, score, name, title);
+            ArrayShowAssign(fullScore, score, name);
             System.out.print("Are these assignments correct? [Y/N]: ");
             String response = userInput.next();
             response = response.toLowerCase();
@@ -189,13 +217,42 @@ public class Gradebook {
 
         }
     }
+    public static void DisplayTests()
+    {
+        String midterm = null;
+        String finalTest = null;
+        if (midtermCurve == 0)
+        {
+            midterm = "    No curve";
+        }
+        else if (midtermCurve != 0)
+        {
+            midterm = "      " + midtermCurve + "%";
+        }
+        if (finalCurve == 0)
+        {
+            finalTest = "    No curve";
+        }
+        else if (finalCurve != 0)
+        {
+            finalTest = "      " + finalCurve + "%";
+        }
 
-    public static void ArrayShow(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name, String title)
+
+        System.out.println();
+        System.out.println("Tests:");
+        System.out.println("Name                                   Points   Total   Curved");
+        System.out.println("-------------------------------------|--------|-------|--------");
+        System.out.println("Midterm                                  " + midtermEarned + "      " + midtermMax + midterm);
+        System.out.println("final                                    " + finalEarned + "       " + finalMax + finalTest);
+    }
+
+    public static void ArrayShowAssign(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name)
     {
         int totalEarned = 0;
         int totalMax = 0;
         System.out.println();
-        System.out.println(title + ":");
+        System.out.println("Assignments:");
         System.out.println("Name                                   Points   Total  ");
         System.out.println("-------------------------------------|--------|-------|");
         for (int x = 1; x<= name.size(); x++)
