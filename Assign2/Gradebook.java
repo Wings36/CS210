@@ -4,8 +4,10 @@ public class Gradebook {
     public static int finalEarned;
     public static int midtermMax;
     public static int midtermEarned;
-    public static int midtermCurve;
-    public static int finalCurve;
+    public static double midtermCurve;
+    public static double finalCurve;
+
+
     public static void main(String[] args) {
         String studName;
         int assignCount;
@@ -31,10 +33,7 @@ public class Gradebook {
         }
 
         testProcess();
-        //test scores
 
-
-        //System.out.println(assignFullPoints);
 
 
 
@@ -46,8 +45,7 @@ public class Gradebook {
         {
             Scanner input = new Scanner(System.in);
             DisplayTests();
-             System.out.print("Are these values correct? [Y/N]: ");
-            System.out.print("Are these assignments correct? [Y/N]: ");
+            System.out.print("Are these values correct? [Y/N]: ");
             String response = input.next();
             response = response.toLowerCase();
 
@@ -68,20 +66,46 @@ public class Gradebook {
 
     public static void testProcess()
     {
+        boolean test = true;
         String title ="Tests";
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter the total amount of possible points for the midterm exam: " );
         midtermMax = userInput.nextInt();
         System.out.println("Enter the amount of points earned on the midterm by the student: ");
         midtermEarned = userInput.nextInt();
-        System.out.println("Enter the amount of curve applied to the midterm (Enter 0 for no curve)");
-        midtermCurve = userInput.nextInt();
+        do
+        {
+            System.out.println("Enter the amount of curve applied to the midterm (Enter 1 for no curve)");
+            midtermCurve = userInput.nextDouble();
+            if (midtermCurve < 1)
+            {
+                System.out.println("Error cannot input a curve factor less than 1");
+            }
+            else
+            {
+                test = false;
+            }
+        } while(test);
+        test = true;
         System.out.println("Enter the total amount of possible points for the final exam: " );
         finalMax = userInput.nextInt();
         System.out.println("Enter the amount of points earned on the final by the student: ");
         finalEarned = userInput.nextInt();
-        System.out.println("Enter the amount of curve applied to the final (Enter 0 for no curve)");
-        finalCurve = userInput.nextInt();
+        do
+        {
+            System.out.println("Enter the amount of curve applied to the final (Enter 1 for no curve)");
+            finalCurve = userInput.nextDouble();
+            if (finalCurve < 1)
+            {
+                System.out.println("Error cannot input a curve factor less than 1");
+            }
+            else
+            {
+                test = false;
+            }
+        } while(test);
+        test = true;
+
         testConfirm();
     }
 
@@ -221,13 +245,15 @@ public class Gradebook {
     {
         String midterm = null;
         String finalTest = null;
+        double scoreMidterm = midtermEarned * midtermCurve;
+        double scoreFinal = finalEarned * finalCurve;
         if (midtermCurve == 0)
         {
             midterm = "    No curve";
         }
         else if (midtermCurve != 0)
         {
-            midterm = "      " + midtermCurve + "%";
+            midterm = "      " + midtermCurve;
         }
         if (finalCurve == 0)
         {
@@ -235,16 +261,17 @@ public class Gradebook {
         }
         else if (finalCurve != 0)
         {
-            finalTest = "      " + finalCurve + "%";
+            finalTest = "      " + finalCurve;
         }
 
 
         System.out.println();
         System.out.println("Tests:");
-        System.out.println("Name                                   Points   Total   Curved");
-        System.out.println("-------------------------------------|--------|-------|--------");
-        System.out.println("Midterm                                  " + midtermEarned + "      " + midtermMax + midterm);
-        System.out.println("final                                    " + finalEarned + "       " + finalMax + finalTest);
+        System.out.println("Name                                   Points   Total   Curve    Final");
+        System.out.println("                                                        Factor   Score");
+        System.out.println("-------------------------------------|--------|-------|--------|--------");
+        System.out.println("Midterm                                  " + midtermEarned + "      " + midtermMax + midterm + "     " + scoreMidterm);
+        System.out.println("final                                    " + finalEarned + "      " + finalMax + finalTest + "     " + scoreFinal);
     }
 
     public static void ArrayShowAssign(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name)
