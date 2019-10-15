@@ -43,6 +43,7 @@ public class Gradebook {
         DisplayTests();
         System.out.println();
         System.out.println();
+        DisplayGrades(assignFullPoints, assignScore);
 
 
 
@@ -250,31 +251,103 @@ public class Gradebook {
 
         }
     }
+    public static char gradeCalculator(int score, int max)
+    {
+        double percentage = ((double)score / max) * 100;
+
+        int grade = (int) percentage;
+        if (grade >= 90)
+        {
+            return 'A';
+        }
+        else if (grade >= 80)
+        {
+            return 'B';
+        }
+        else if (grade >= 70)
+        {
+            return 'C';
+        }
+        else if (grade >= 60)
+        {
+            return 'D';
+        }
+        else if (grade < 60)
+        {
+            return 'F';
+        }
+        else
+        {
+            //error in calculation if returns E
+            return 'E';
+        }
+    }
+
     public static void DisplayGrades(ArrayList<Integer> fullScore, ArrayList<Integer> score)
     {
+        char assignLetter;
+        char midtermLetter;
+        char finalLetter;
         //calculate assignments
         int assignmentFullTotal = 0;
         int assignmentTotal = 0;
 
-        for (int x = 0; x <= fullScore.size(); x++)
+        for (int x = 0; x < fullScore.size(); x++)
         {
             assignmentFullTotal = assignmentFullTotal + fullScore.get(x);
         }
-        for (int x = 0; x <= score.size(); x++)
+        for (int x = 0; x < score.size(); x++)
         {
             assignmentTotal = assignmentTotal + score.get(x);
         }
         //calculate grades
-
+        assignLetter = gradeCalculator(assignmentTotal, assignmentFullTotal);
+        midtermLetter = gradeCalculator(scoreMidterm, midtermMax);
+        finalLetter = gradeCalculator(scoreFinal, finalMax);
 
         //building strings
+        String midterm = scoreMidterm + "/" + midtermMax;
+        if (midterm.length() < 10)
+        {
+            do {
+                midterm = midterm + " ";
+            } while (midterm.length() < 10);
+        }
+        else
+        {
+            midterm = midterm + "   ";
+        }
+
+        String finalString = scoreFinal + "/" + finalMax;
+        if (finalString.length() < 10)
+        {
+            do {
+                finalString = finalString + " ";
+            } while (finalString.length() < 10);
+        }
+        else
+        {
+            finalString = finalString + "   ";
+        }
 
         String assignFull = assignmentTotal + "/" + assignmentFullTotal;
+        if (assignFull.length() < 10)
+        {
+            do {
+                assignFull = assignFull + " ";
+            } while (assignFull.length() < 10);
+        }
+        else
+        {
+            assignFull = assignFull + "   ";
+        }
 
         System.out.println("Finals Grades:");
-        System.out.println("Name                                   Points   Total  ");
-        System.out.println("-------------------------------------|--------|-------|");
-        System.out.println("Assignments                              " +assignFull);
+        System.out.println("Name                                   Points       Grade  ");
+        System.out.println("-------------------------------------|------------|-------|");
+        System.out.println("Assignments                              " + assignFull + "    " + assignLetter);
+        System.out.println("Midterm                                  " + midterm + "    " + midtermLetter);
+        System.out.println("Final                                    " + finalString + "    " + finalLetter);
     }
 
     public static void DisplayTests()
@@ -283,19 +356,19 @@ public class Gradebook {
         String finalTest = null;
         scoreMidterm = (int) Math.round(midtermEarned * midtermCurve);
         scoreFinal = (int) Math.round(finalEarned * finalCurve);
-        if (midtermCurve == 0)
+        if (midtermCurve == 1)
         {
-            midterm = "    No curve";
+            midterm = "   No curve";
         }
-        else if (midtermCurve != 0)
+        else if (midtermCurve != 1)
         {
             midterm = "      " + midtermCurve;
         }
-        if (finalCurve == 0)
+        if (finalCurve == 1)
         {
-            finalTest = "    No curve";
+            finalTest = "   No curve";
         }
-        else if (finalCurve != 0)
+        else if (finalCurve != 1)
         {
             finalTest = "      " + finalCurve;
         }
