@@ -9,7 +9,6 @@ public class Gradebook {
     public static int scoreMidterm;
     public static int scoreFinal;
 
-
     public static void main(String[] args) {
         String studName;
         int assignCount;
@@ -25,7 +24,6 @@ public class Gradebook {
         ArrayList<Integer> assignFullPoints = new ArrayList<Integer>(assignCount);
         ArrayList<Integer> assignScore = new ArrayList<Integer>(assignCount);
         ArrayList<String> assignName = new ArrayList<String>(assignCount);
-
 
         //assignments
         if (assignCount > 0)
@@ -44,9 +42,6 @@ public class Gradebook {
         System.out.println();
         System.out.println();
         DisplayGrades(assignFullPoints, assignScore);
-
-
-
     }
 
     public static void testConfirm()
@@ -69,9 +64,6 @@ public class Gradebook {
                 System.out.println("Error invalid response");
             }
         }
-
-
-
     }
 
     public static void testProcess()
@@ -115,7 +107,6 @@ public class Gradebook {
             }
         } while(test);
         test = true;
-
         testConfirm();
     }
 
@@ -145,10 +136,6 @@ public class Gradebook {
             System.out.print("Enter the score the student earned: ");
             score.add(userInput.nextInt());
         }
-
-
-
-
     }
 
     public static void AssignConfirm(ArrayList<Integer> fullScore, ArrayList<Integer> score, ArrayList<String> name)
@@ -403,6 +390,5 @@ public class Gradebook {
         System.out.println("");
         System.out.println("");
     }
-
 }
 
