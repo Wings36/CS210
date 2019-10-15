@@ -36,12 +36,10 @@ public class Gradebook {
 
         System.out.println("Grades for " + studName);
         DisplayAssign(assignFullPoints, assignScore, assignName);
-        System.out.println();
-        System.out.println();
         DisplayTests();
         System.out.println();
         System.out.println();
-        DisplayGrades(assignFullPoints, assignScore);
+        DisplayGrades(assignFullPoints, assignScore,studName);
     }
 
     public static void testConfirm()
@@ -238,6 +236,7 @@ public class Gradebook {
 
         }
     }
+
     public static char gradeCalculator(int score, int max)
     {
         double percentage = ((double)score / max) * 100;
@@ -270,12 +269,15 @@ public class Gradebook {
         }
     }
 
-    public static void DisplayGrades(ArrayList<Integer> fullScore, ArrayList<Integer> score)
+    public static void DisplayGrades(ArrayList<Integer> fullScore, ArrayList<Integer> score, String studentName)
     {
         char assignLetter;
         char midtermLetter;
         char finalLetter;
-        //calculate assignments
+        char grandLetter;
+        int finalGradeFull;
+        int finalGrade;
+        //calculate numbers
         int assignmentFullTotal = 0;
         int assignmentTotal = 0;
 
@@ -287,10 +289,14 @@ public class Gradebook {
         {
             assignmentTotal = assignmentTotal + score.get(x);
         }
+        finalGradeFull = assignmentFullTotal + finalMax + midtermMax;
+        finalGrade = assignmentTotal + scoreFinal + scoreMidterm;
         //calculate grades
         assignLetter = gradeCalculator(assignmentTotal, assignmentFullTotal);
         midtermLetter = gradeCalculator(scoreMidterm, midtermMax);
         finalLetter = gradeCalculator(scoreFinal, finalMax);
+        grandLetter = gradeCalculator(finalGrade, finalGradeFull);
+
 
         //building strings
         String midterm = scoreMidterm + "/" + midtermMax;
@@ -329,12 +335,123 @@ public class Gradebook {
             assignFull = assignFull + "   ";
         }
 
-        System.out.println("Finals Grades:");
+        String grandFull = finalGrade + "/" + finalGradeFull;
+        if (grandFull.length() < 10)
+        {
+            do {
+                grandFull = grandFull + " ";
+            } while (grandFull.length() < 10);
+        }
+        else
+        {
+            grandFull = grandFull + "   ";
+        }
+
+        System.out.println("Finals Grades: " + studentName);
         System.out.println("Name                                   Points       Grade  ");
         System.out.println("-------------------------------------|------------|-------|");
         System.out.println("Assignments                              " + assignFull + "    " + assignLetter);
         System.out.println("Midterm                                  " + midterm + "    " + midtermLetter);
-        System.out.println("Final                                    " + finalString + "    " + finalLetter);
+        System.out.println("Final Exam                               " + finalString + "    " + finalLetter);
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("Final Grade                              " + grandFull + "    " + grandLetter);
+        System.out.println();
+        System.out.println();
+        GradeEstimation(assignmentFullTotal, assignmentTotal);
+
+    }
+
+    public static void GradeEstimation(int assignFull, int assign) {
+        int totalEarned = assign + scoreMidterm,
+            totalFull = assignFull + midtermMax,
+            gradeA = -1,
+            gradeB = -1,
+            gradeC = -1,
+            gradeD = -1,
+            gradeF = -1;
+        String  finalA = null,
+                finalB = null,
+                finalC = null,
+                finalD = null,
+                finalF = null,
+                gradeNull = " Impossible";
+
+        for (int x = finalMax; x >= 0; x--)
+        {
+
+            char grade = gradeCalculator(x + assignFull + scoreMidterm, assignFull + midtermMax + finalMax);
+            if(grade == 'A')
+            {
+                gradeA = x;
+            }
+            else if(grade == 'B')
+            {
+                gradeB = x;
+            }
+            else if(grade == 'C')
+            {
+                gradeC = x;
+            }
+            else if (grade == 'D')
+            {
+                gradeD = x;
+            }
+            else if (grade == 'F')
+            {
+                gradeF = x;
+            }
+        }
+
+        if (gradeA == -1)
+        {
+            finalA = gradeNull;
+        }
+        else
+        {
+            finalA = "     " + Integer.toString(gradeA);
+        }
+        if (gradeB == -1)
+        {
+            finalB = gradeNull;
+        }
+        else
+        {
+            finalB = "     " + Integer.toString(gradeB);
+        }
+        if (gradeC == -1)
+        {
+            finalC = gradeNull;
+        }
+        else
+        {
+            finalC = "     " + Integer.toString(gradeC);
+        }
+        if (gradeD == -1)
+        {
+            finalD = gradeNull;
+        }
+        else
+        {
+            finalD = "     " + Integer.toString(gradeD);
+        }
+        if (gradeF == -1)
+        {
+            finalF = gradeNull;
+        }
+        else
+        {
+            finalF = "     " + Integer.toString(gradeF);
+        }
+
+        System.out.println("Grade Inspector");
+        System.out.println("Required amount of points for the final exam to obtain a certain grade");
+        System.out.println("  Grade     Points");
+        System.out.println("--------|------------");
+        System.out.println("    A    " + finalA);
+        System.out.println("    B    " + finalB);
+        System.out.println("    C    " + finalC);
+        System.out.println("    D    " + finalD);
+        System.out.println("    F    " + finalF);
     }
 
     public static void DisplayTests()
