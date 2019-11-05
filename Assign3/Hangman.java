@@ -86,6 +86,8 @@ public class Hangman {
             {
                 hangman[lives - 1] = '_';
                 lives--;
+                System.out.println("Incorrect");
+
             }
             fail = true;
         }
