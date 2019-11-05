@@ -44,6 +44,7 @@ public class Hangman {
         int winScore = word.length;
         int score = 0;
         Scanner input = new Scanner(System.in);
+        List<Character> attempts = new ArrayList<Character>();
         char[] answer = new char[winScore];
         char guesses[];
         Boolean fail = true;
@@ -73,23 +74,33 @@ public class Hangman {
             System.out.println();
             System.out.print("Enter a letter to guess: ");
             char userGuess = input. next().charAt(0);
-            for (int x = 0; x < winScore; x++)
-            {
-                if (word[x] == userGuess)
-                {
-                    answer[x] = word[x];
-                    score++;
-                    fail = false;
-                }
-            }
-            if (fail)
+            if(attempts.contains(userGuess))
             {
                 hangman[lives - 1] = '_';
                 lives--;
-                System.out.println("Incorrect");
-
+                System.out.println("Repeated guess: -1 lives");
             }
-            fail = true;
+            else
+            {
+                attempts.add(userGuess);
+                for (int x = 0; x < winScore; x++)
+                {
+                    if (word[x] == userGuess)
+                    {
+                        answer[x] = word[x];
+                        score++;
+                        fail = false;
+                    }
+                }
+                if (fail)
+                {
+                    hangman[lives - 1] = '_';
+                    lives--;
+                    System.out.println("Incorrect: -1 lives");
+                }
+                fail = true;
+            }
+
         }
         System.out.println("Error");
         return false;
