@@ -1,7 +1,7 @@
 public class GroceryItemOrder {
-    String name;
-    int quantity;
-    double pricePerUnit;
+    public String name;
+    public int quantity;
+    public double pricePerUnit;
 
     public GroceryItemOrder(String name, int quantity, double pricePerUnit)
     {
