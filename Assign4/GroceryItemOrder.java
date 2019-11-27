@@ -1,5 +1,4 @@
 public class GroceryItemOrder {
-
     String name;
     int quantity;
     double pricePerUnit;
