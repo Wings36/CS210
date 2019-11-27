@@ -1,23 +1,23 @@
-public class GroceryItemOrder {
-    public String name;
-    public int quantity;
-    public double pricePerUnit;
+class GroceryItemOrder {
+    String name;
+    private int quantity;
+    private double pricePerUnit;
 
-    public GroceryItemOrder(String name, int quantity, double pricePerUnit)
+    GroceryItemOrder(String name, double pricePerUnit)
     {
         this.name = name;
-        this.quantity = quantity;
         this.pricePerUnit = pricePerUnit;
     }
 
-    public double getCost()
+    double getCost()
     {
         return pricePerUnit * quantity;
     }
 
-    public void setQuantity(int quantity)
+    void setQuantity(int quantity, GroceryList list)
     {
         this.quantity = quantity;
+        list.update(name, this);
     }
 
 
