@@ -9,7 +9,9 @@ public class MorseNumberMixUp {
 
         Scanner input = new Scanner(System.in);
         File answer = new File("answer.txt");
+        File questionFile = new File("questions.txt");
         PrintStream file = new PrintStream(answer);
+        PrintStream questionPrint = new PrintStream(questionFile);
         System.out.println("How many numbers?");
         int count = input.nextInt();
         int firstAnws = 0;
@@ -44,7 +46,10 @@ public class MorseNumberMixUp {
         min = 0;
         for (int x = 0; x < count; x++) {
             int range = max - min + 1;
-            System.out.println(questions.get((int) (Math.random() * range) + min));
+            String output = questions.get((int) (Math.random() * range) + min);
+            System.out.println(output);
+            questionPrint.println(output);
+
             max = max - 1;
         }
     }
